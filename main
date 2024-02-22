@@ -1,0 +1,53 @@
+#1. Создаем файл "docker-compose.yml" в рабочей дериктории
+#2. Опеределяем сервис в файле "docker-compose.yml" На "CMS WordPress" 
+#можно использовать:
+_________________________________________________________________________________________________________
+version: '3'
+
+services:
+
+    wordpress:
+
+        image: wordpress:latest
+
+        ports:
+
+            - 8080:80
+
+        volumes:
+
+            - ./wordpress:/var/www/html
+
+        environment:
+
+            - WORDPRESS_DB_HOST=db
+
+            - WORDPRESS_DB_NAME=wordpress
+
+            - WORDPRESS_DB_USER=root
+
+            - WORDPRESS_DB_PASSWORD=root
+
+    db:
+
+        image: mysql:5.7
+
+        environment:
+
+            - MYSQL_ROOT_PASSWORD=root
+
+            - MYSQL_DATABASE=wordpress
+
+        volumes:
+
+            - ./db_data:/var/lib/mysql
+_________________________________________________________________________________________________________
+
+#3. Сохраняем наш файл "docker-compose.yml" и выполняет эту команду, чтобы запустить наши контейнеры:
+_____________________________________
+docker-compose up -d
+_____________________________________
+
+#Команда "docker-compose up" запускаеи контейнеры в фоновом режиме и выводит их логи.
+
+#4. Так же, можно проверить, что наш сайт работает, перейдя по адресу http://localhost:8080. Мы должны увидеть страницу установки WordPress.
